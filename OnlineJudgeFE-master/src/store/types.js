@@ -13,6 +13,9 @@ export default keyMirror({
   'CHANGE_PROFILE': null,
   'CHANGE_MODAL_STATUS': null,
   'UPDATE_WEBSITE_CONF': null,
+  'CHANGE_LOCALE': null,
+  'CHANGE_THEME': null,
+  'CHANGE_DARK_MODE': null,
 
   'NOW': null,
   'NOW_ADD_1S': null,

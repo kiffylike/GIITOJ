@@ -11,9 +11,12 @@ const debug = process.env.NODE_ENV !== 'production'
 const rootState = {
   website: {},
   modalStatus: {
-    mode: 'login', // or 'register',
+    mode: 'login',
     visible: false
-  }
+  },
+  locale: 'zh-CN',
+  darkMode: false,
+  currentTheme: 'default'
 }
 
 const rootGetters = {
@@ -22,6 +25,15 @@ const rootGetters = {
   },
   'modalStatus' (state) {
     return state.modalStatus
+  },
+  'locale' (state) {
+    return state.locale
+  },
+  'darkMode' (state) {
+    return state.darkMode
+  },
+  'currentTheme' (state) {
+    return state.currentTheme
   }
 }
 
@@ -36,6 +48,24 @@ const rootMutations = {
     if (visible !== undefined) {
       state.modalStatus.visible = visible
     }
+  },
+  [types.CHANGE_LOCALE] (state, locale) {
+    state.locale = locale
+    localStorage.setItem('locale', locale)
+  },
+  [types.CHANGE_DARK_MODE] (state, darkMode) {
+    state.darkMode = darkMode
+    localStorage.setItem('darkMode', darkMode)
+    if (darkMode) {
+      document.documentElement.classList.add('dark-mode')
+    } else {
+      document.documentElement.classList.remove('dark-mode')
+    }
+  },
+  [types.CHANGE_THEME] (state, theme) {
+    state.currentTheme = theme
+    localStorage.setItem('currentTheme', theme)
+    document.documentElement.setAttribute('data-theme', theme)
   }
 }
 
@@ -55,6 +85,25 @@ const rootActions = {
       window.document.title = state.website.website_name_shortcut + ' | ' + payload.title
     } else {
       window.document.title = state.website.website_name_shortcut + ' | ' + state.route.meta.title
+    }
+  },
+  initThemeAndLocale ({commit}) {
+    const savedLocale = localStorage.getItem('locale')
+    const savedDarkMode = localStorage.getItem('darkMode')
+    const savedTheme = localStorage.getItem('currentTheme')
+    
+    if (savedLocale) {
+      commit(types.CHANGE_LOCALE, savedLocale)
+    }
+    
+    if (savedDarkMode !== null) {
+      commit(types.CHANGE_DARK_MODE, savedDarkMode === 'true')
+    }
+    
+    if (savedTheme) {
+      commit(types.CHANGE_THEME, savedTheme)
+    } else {
+      commit(types.CHANGE_THEME, 'default')
     }
   }
 }
