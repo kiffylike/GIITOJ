@@ -9,7 +9,7 @@ An open-source Online Judge system based on QDUOJ
 ### 快速启动指令：
 ```bash
 # 克隆部署仓库
-git clone [https://github.com/kiffylike/XOJ-ProDeploy.git](https://github.com/kiffylike/XOJ-ProDeploy.git) && cd XOJ-ProDeploy
+git clone https://github.com/kiffylike/XOJ-ProDeploy.git && cd XOJ-ProDeploy
 
 # 启动服务
 docker compose -f docker-compose.xoj-pro.yml up -d
