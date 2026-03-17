@@ -14,7 +14,7 @@ GIITOJ 是基于开源项目 QDUOJ 深度定制的在线评测系统。本项目
 
 为了方便用户快速上手，我们提供了专门的部署仓库。请前往以下地址获取完整的 Docker 配置文件及部署脚本：
 
-👉 **部署仓库地址**：https://github.com/kiffylike/GIITOJ-Deploy.git
+👉 **部署仓库地址**：https://github.com/kiffylike/GIITOJ-Deploy
 
 ### 快速启动指令：
 ```bash
