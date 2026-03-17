@@ -19,9 +19,8 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 echo "开始构建 Docker 镜像..."
-                // 在 Windows 上使用 bat，Linux 上使用 sh
-                // 这里假设你的 Jenkins 安装在 Linux/Docker 环境，如果是 Windows Jenkins，请把 sh 改为 bat
-                sh 'docker compose -f ${COMPOSE_FILE} build'
+                // 注入代理，让 Docker 在打包时走你的 Clash，完美解决 npm 网络被断的问题
+                sh 'docker compose -f ${COMPOSE_FILE} build --build-arg HTTP_PROXY=http://host.docker.internal:7890 --build-arg HTTPS_PROXY=http://host.docker.internal:7890'
             }
         }
 
