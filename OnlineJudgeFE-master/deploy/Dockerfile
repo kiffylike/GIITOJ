@@ -5,14 +5,15 @@ WORKDIR /app
 RUN apk add --no-cache git python3 make g++
 
 COPY package*.json ./
-# 强制让 npm 使用 HTTP 代理
-ARG HTTP_PROXY
-ARG HTTPS_PROXY
-ENV HTTP_PROXY=$HTTP_PROXY
-ENV HTTPS_PROXY=$HTTPS_PROXY
+# 移除代理，改用更稳定的 npm 配置（限制并发发包量，增加重试机制，防止被墙或被代理切断）
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm config set maxsockets 5 && \
+    npm config set strict-ssl false
 
-RUN if [ -n "$HTTP_PROXY" ]; then npm config set proxy $HTTP_PROXY; npm config set https-proxy $HTTPS_PROXY; fi
-RUN npm install --registry=https://registry.npmmirror.com
+RUN npm install
 
 COPY . .
 ENV NODE_OPTIONS=--openssl-legacy-provider
