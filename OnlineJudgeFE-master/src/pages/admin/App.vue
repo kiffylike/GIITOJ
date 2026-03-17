@@ -5,9 +5,20 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   export default {
     name: 'app',
-    components: {}
+    computed: {
+      ...mapGetters(['locale'])
+    },
+    watch: {
+      locale: {
+        immediate: true,
+        handler (newVal) {
+          this.$i18n.locale = newVal
+        }
+      }
+    }
   }
 </script>
 

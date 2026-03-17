@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-server
+    # 使用 root 用户运行，这样 Jenkins 容器内部才有权限访问挂载的 docker.sock
+    user: root
+    ports:
+      # 8080: Jenkins Web UI 访问端口
+      - "8080:8080"
+      # 50000: 提供给 Jenkins agent 节点连接的端口（如果要配置分布式构建的话）
+      - "50000:50000"
+    volumes:
+      # 持久化 Jenkins 的数据（比如配置、插件、任务流数据等），防止重启容器后数据丢失
+      - jenkins_data:/var/jenkins_home
+      # 【核心配置】挂载宿主机的 Docker Socket
+      # 这允许 Jenkins 容器调用宿主机的 Docker，也就是你在 Jenkinsfile 里写的 docker compose build 能正常执行
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+volumes:
+  jenkins_data:

@@ -15,8 +15,7 @@ const rootState = {
     visible: false
   },
   locale: 'zh-CN',
-  darkMode: false,
-  currentTheme: 'default'
+  currentTheme: 'default-light'
 }
 
 const rootGetters = {
@@ -28,9 +27,6 @@ const rootGetters = {
   },
   'locale' (state) {
     return state.locale
-  },
-  'darkMode' (state) {
-    return state.darkMode
   },
   'currentTheme' (state) {
     return state.currentTheme
@@ -52,15 +48,6 @@ const rootMutations = {
   [types.CHANGE_LOCALE] (state, locale) {
     state.locale = locale
     localStorage.setItem('locale', locale)
-  },
-  [types.CHANGE_DARK_MODE] (state, darkMode) {
-    state.darkMode = darkMode
-    localStorage.setItem('darkMode', darkMode)
-    if (darkMode) {
-      document.documentElement.classList.add('dark-mode')
-    } else {
-      document.documentElement.classList.remove('dark-mode')
-    }
   },
   [types.CHANGE_THEME] (state, theme) {
     state.currentTheme = theme
@@ -89,22 +76,23 @@ const rootActions = {
   },
   initThemeAndLocale ({commit}) {
     const savedLocale = localStorage.getItem('locale')
-    const savedDarkMode = localStorage.getItem('darkMode')
-    const savedTheme = localStorage.getItem('currentTheme')
+    let savedTheme = localStorage.getItem('currentTheme')
     
+    // Auto-migrate old theme names to premium 2026 themes
+    if (savedTheme === 'default' || !savedTheme) savedTheme = 'default-light'
+    if (savedTheme === 'github') savedTheme = 'default-light'
+    if (savedTheme === 'vscode') savedTheme = 'default-dark'
+    if (savedTheme === 'material') savedTheme = 'ocean-breeze'
+    if (savedTheme === 'cyberpunk') savedTheme = 'cyberpunk-dark'
+    if (savedTheme === 'anime') savedTheme = 'cartoon-fun'
+
     if (savedLocale) {
       commit(types.CHANGE_LOCALE, savedLocale)
-    }
-    
-    if (savedDarkMode !== null) {
-      commit(types.CHANGE_DARK_MODE, savedDarkMode === 'true')
-    }
-    
-    if (savedTheme) {
-      commit(types.CHANGE_THEME, savedTheme)
     } else {
-      commit(types.CHANGE_THEME, 'default')
+      commit(types.CHANGE_LOCALE, 'zh-CN')
     }
+    
+    commit(types.CHANGE_THEME, savedTheme)
   }
 }
 

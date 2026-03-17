@@ -1,184 +1,162 @@
-@theme-default-primary: #2d8cf0;
-@theme-default-secondary: #5cadff;
-@theme-default-accent: #19be6b;
-@theme-default-background: #ffffff;
-@theme-default-surface: #f8f8f9;
-@theme-default-text: #2d2d2d;
-@theme-default-text-secondary: #666666;
+/* =========================================
+   Ultimate Theme Variables (Premium Edition)
+========================================= */
 
-@theme-github-primary: #24292e;
-@theme-github-secondary: #0366d6;
-@theme-github-accent: #28a745;
-@theme-github-background: #ffffff;
-@theme-github-surface: #f6f8fa;
-@theme-github-text: #24292e;
-@theme-github-text-secondary: #586069;
-
-@theme-vscode-primary: #007acc;
-@theme-vscode-secondary: #1e1e1e;
-@theme-vscode-accent: #0e639c;
-@theme-vscode-background: #ffffff;
-@theme-vscode-surface: #f3f3f3;
-@theme-vscode-text: #333333;
-@theme-vscode-text-secondary: #6e6e6e;
-
-@theme-material-primary: #6200ee;
-@theme-material-secondary: #03dac6;
-@theme-material-accent: #bb86fc;
-@theme-material-background: #ffffff;
-@theme-material-surface: #f5f5f5;
-@theme-material-text: #212121;
-@theme-material-text-secondary: #757575;
-
-@theme-cyberpunk-primary: #ff00ff;
-@theme-cyberpunk-secondary: #00ffff;
-@theme-cyberpunk-accent: #ffff00;
-@theme-cyberpunk-background: #0a0a0a;
-@theme-cyberpunk-surface: #1a1a2e;
-@theme-cyberpunk-text: #00ffff;
-@theme-cyberpunk-text-secondary: #ff00ff;
-
-@theme-anime-primary: #ff6b9d;
-@theme-anime-secondary: #c44569;
-@theme-anime-accent: #ffd93d;
-@theme-anime-background: #fff0f5;
-@theme-anime-surface: #ffe4ec;
-@theme-anime-text: #4a4a4a;
-@theme-anime-text-secondary: #8a8a8a;
-
-[data-theme="default"] {
-  --primary-color: @theme-default-primary;
-  --secondary-color: @theme-default-secondary;
-  --accent-color: @theme-default-accent;
-  --background-color: @theme-default-background;
-  --surface-color: @theme-default-surface;
-  --text-color: @theme-default-text;
-  --text-secondary-color: @theme-default-text-secondary;
+/* Default Fallbacks mapped to default-light */
+[data-theme="default"], [data-theme=""] {
+  --primary-color: #3b82f6;
+  --secondary-color: #60a5fa;
+  --accent-color: #10b981;
+  --background-image: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  --background-color: #f8fafc;
+  --surface-color: rgba(255, 255, 255, 0.75);
+  --text-color: #1e293b;
+  --text-secondary-color: #64748b;
+  --header-bg: rgba(255, 255, 255, 0.65);
+  --border-color: rgba(255, 255, 255, 0.5);
+  --shadow-color: rgba(148, 163, 184, 0.15);
+  --hover-shadow: rgba(148, 163, 184, 0.25);
+  --hover-glow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
 }
 
-[data-theme="github"] {
-  --primary-color: @theme-github-primary;
-  --secondary-color: @theme-github-secondary;
-  --accent-color: @theme-github-accent;
-  --background-color: @theme-github-background;
-  --surface-color: @theme-github-surface;
-  --text-color: @theme-github-text;
-  --text-secondary-color: @theme-github-text-secondary;
+/* 1. Default Light (Apple-style Core UI) - Static, no jumps */
+[data-theme="default-light"] {
+  --primary-color: #0066cc;
+  --secondary-color: #409cff;
+  --accent-color: #34c759;
+  --background-image: linear-gradient(to bottom right, #f2f2f7, #e5e5ea);
+  --background-color: #f2f2f7;
+  --surface-color: rgba(255, 255, 255, 0.75);
+  --text-color: #1c1c1e;
+  --text-secondary-color: #8e8e93;
+  --header-bg: rgba(255, 255, 255, 0.65);
+  --border-color: rgba(255, 255, 255, 0.6);
+  --shadow-color: rgba(0, 0, 0, 0.04);
+  --hover-shadow: rgba(0, 0, 0, 0.1);
+  --hover-glow: 0 12px 30px -4px rgba(0, 102, 204, 0.15);
+  --hover-transform: none; /* No jumping for default themes */
 }
 
-[data-theme="vscode"] {
-  --primary-color: @theme-vscode-primary;
-  --secondary-color: @theme-vscode-secondary;
-  --accent-color: @theme-vscode-accent;
-  --background-color: @theme-vscode-background;
-  --surface-color: @theme-vscode-surface;
-  --text-color: @theme-vscode-text;
-  --text-secondary-color: @theme-vscode-text-secondary;
+/* 2. Default Dark (Sleek Slate Dark) - Static, no jumps */
+[data-theme="default-dark"] {
+  --primary-color: #3b82f6;
+  --secondary-color: #60a5fa;
+  --accent-color: #10b981;
+  --background-image: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --background-color: #0f172a;
+  --surface-color: rgba(30, 41, 59, 0.7);
+  --text-color: #f8fafc;
+  --text-secondary-color: #94a3b8;
+  --header-bg: rgba(15, 23, 42, 0.75);
+  --border-color: rgba(51, 65, 85, 0.4);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --hover-shadow: rgba(0, 0, 0, 0.5);
+  --hover-glow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+  --hover-transform: none; /* No jumping for default themes */
 }
 
-[data-theme="material"] {
-  --primary-color: @theme-material-primary;
-  --secondary-color: @theme-material-secondary;
-  --accent-color: @theme-material-accent;
-  --background-color: @theme-material-background;
-  --surface-color: @theme-material-surface;
-  --text-color: @theme-material-text;
-  --text-secondary-color: @theme-material-text-secondary;
+/* 3. Cyberpunk Dark (Neon Intensity) - Dynamic */
+[data-theme="cyberpunk-dark"] {
+  --primary-color: #ff003c;
+  --secondary-color: #00f0ff;
+  --accent-color: #fcee0a;
+  --background-image: radial-gradient(circle at 50% 0%, #150015 0%, #050110 50%, #000000 100%);
+  --background-color: #050110;
+  --surface-color: rgba(10, 5, 25, 0.6);
+  --text-color: #00f0ff;
+  --text-secondary-color: #ff003c;
+  --header-bg: rgba(5, 1, 15, 0.8);
+  --border-color: rgba(255, 0, 60, 0.3);
+  --shadow-color: rgba(0, 240, 255, 0.15);
+  --hover-shadow: rgba(255, 0, 60, 0.3);
+  --hover-glow: 0 0 25px 5px rgba(255, 0, 60, 0.6);
+  --hover-transform: translateY(-4px) scale(1.02);
 }
 
-[data-theme="cyberpunk"] {
-  --primary-color: @theme-cyberpunk-primary;
-  --secondary-color: @theme-cyberpunk-secondary;
-  --accent-color: @theme-cyberpunk-accent;
-  --background-color: @theme-cyberpunk-background;
-  --surface-color: @theme-cyberpunk-surface;
-  --text-color: @theme-cyberpunk-text;
-  --text-secondary-color: @theme-cyberpunk-text-secondary;
+/* 4. Cartoon Fun (Playful Anime) - Dynamic */
+[data-theme="cartoon-fun"] {
+  --primary-color: #ff7675;
+  --secondary-color: #74b9ff;
+  --accent-color: #ffeaa7;
+  --background-image: repeating-linear-gradient(45deg, #fdfbfb 0px, #fdfbfb 20px, #fff5f5 20px, #fff5f5 40px);
+  --background-color: #fff0f5;
+  --surface-color: rgba(255, 255, 255, 0.85);
+  --text-color: #2d3436;
+  --text-secondary-color: #636e72;
+  --header-bg: rgba(255, 245, 248, 0.85);
+  --border-color: rgba(255, 118, 117, 0.5);
+  --shadow-color: rgba(255, 118, 117, 0.15);
+  --hover-shadow: rgba(116, 185, 255, 0.3);
+  --hover-glow: 0 15px 35px -5px rgba(255, 118, 117, 0.4);
+  --hover-transform: translateY(-6px) rotate(1deg); /* Extra playful pop */
 }
 
-[data-theme="anime"] {
-  --primary-color: @theme-anime-primary;
-  --secondary-color: @theme-anime-secondary;
-  --accent-color: @theme-anime-accent;
-  --background-color: @theme-anime-background;
-  --surface-color: @theme-anime-surface;
-  --text-color: @theme-anime-text;
-  --text-secondary-color: @theme-anime-text-secondary;
+/* 5. Ocean Breeze (Deep Sea Glow) - Dynamic */
+[data-theme="ocean-breeze"] {
+  --primary-color: #00d2d3;
+  --secondary-color: #0abde3;
+  --accent-color: #1dd1a1;
+  --background-image: linear-gradient(135deg, #012133 0%, #03364f 50%, #065279 100%);
+  --background-color: #012133;
+  --surface-color: rgba(4, 38, 59, 0.65);
+  --text-color: #e0f2f1;
+  --text-secondary-color: #80cbc4;
+  --header-bg: rgba(2, 33, 50, 0.75);
+  --border-color: rgba(0, 210, 211, 0.3);
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --hover-shadow: rgba(0, 210, 211, 0.2);
+  --hover-glow: 0 10px 40px rgba(0, 210, 211, 0.5);
+  --hover-transform: translateY(-4px);
 }
 
-.dark-mode {
-  &[data-theme="default"] {
-    --primary-color: #409eff;
-    --secondary-color: #79bbff;
-    --accent-color: #67c23a;
-    --background-color: #1f1f1f;
-    --surface-color: #2d2d2d;
-    --text-color: #e4e4e4;
-    --text-secondary-color: #a0a0a0;
-  }
-
-  &[data-theme="github"] {
-    --primary-color: #58a6ff;
-    --secondary-color: #0d1117;
-    --accent-color: #3fb950;
-    --background-color: #0d1117;
-    --surface-color: #161b22;
-    --text-color: #c9d1d9;
-    --text-secondary-color: #8b949e;
-  }
-
-  &[data-theme="vscode"] {
-    --primary-color: #007acc;
-    --secondary-color: #1e1e1e;
-    --accent-color: #007acc;
-    --background-color: #1e1e1e;
-    --surface-color: #252526;
-    --text-color: #cccccc;
-    --text-secondary-color: #969696;
-  }
-
-  &[data-theme="material"] {
-    --primary-color: #bb86fc;
-    --secondary-color: #03dac6;
-    --accent-color: #3700b3;
-    --background-color: #121212;
-    --surface-color: #1e1e1e;
-    --text-color: #ffffff;
-    --text-secondary-color: #b0b0b0;
-  }
-
-  &[data-theme="cyberpunk"] {
-    --primary-color: #ff00ff;
-    --secondary-color: #00ffff;
-    --accent-color: #ffff00;
-    --background-color: #000000;
-    --surface-color: #0f0f23;
-    --text-color: #00ffff;
-    --text-secondary-color: #ff00ff;
-  }
-
-  &[data-theme="anime"] {
-    --primary-color: #ff6b9d;
-    --secondary-color: #c44569;
-    --accent-color: #ffd93d;
-    --background-color: #1a1a2e;
-    --surface-color: #16213e;
-    --text-color: #ffb6c1;
-    --text-secondary-color: #ffd1dc;
-  }
+/* 6. Aurora Glow (Mystical Lights) - Dynamic */
+[data-theme="aurora-glow"] {
+  --primary-color: #a29bfe;
+  --secondary-color: #6c5ce7;
+  --accent-color: #00cec9;
+  --background-image: linear-gradient(to top right, #1b1464 0%, #30336b 50%, #686de0 100%);
+  --background-color: #1b1464;
+  --surface-color: rgba(27, 20, 100, 0.5);
+  --text-color: #f1f2f6;
+  --text-secondary-color: #ced6e0;
+  --header-bg: rgba(27, 20, 100, 0.6);
+  --border-color: rgba(162, 155, 254, 0.4);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --hover-shadow: rgba(108, 92, 231, 0.3);
+  --hover-glow: 0 0 35px 5px rgba(162, 155, 254, 0.6);
+  --hover-transform: translateY(-4px) scale(1.01);
 }
 
+/* Apply CSS Variables to Body Elements Globally */
 body {
-  background-color: var(--background-color);
+  background: var(--background-image, var(--background-color));
+  background-attachment: fixed !important;
   color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-#header {
-  background-color: var(--surface-color) !important;
-  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1) !important;
-  
-  .oj-menu {
-    background: var(--surface-color) !important;
-  }
+/* Generic IVIEW overrides based on theme */
+.ivu-card {
+  background: var(--surface-color) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+.ivu-table, .ivu-table-wrapper, .ivu-table td, .ivu-table th, .ivu-table-header {
+  background: var(--surface-color) !important;
+  color: var(--text-color) !important;
+  border-bottom-color: var(--border-color) !important;
+}
+
+.ivu-menu-light {
+  background: transparent !important;
+}
+
+.ivu-menu-light.ivu-menu-horizontal .ivu-menu-item-active, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item:hover, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu-active, .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu:hover {
+  color: var(--primary-color) !important;
+  border-bottom: 2px solid var(--primary-color) !important;
+}
+
+.ivu-menu-item {
+  color: var(--text-color) !important;
 }

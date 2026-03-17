@@ -5,7 +5,7 @@ WORKDIR /app
 RUN apk add --no-cache git python3 make g++
 
 COPY package*.json ./
-RUN npm install
+RUN npm install --registry=https://registry.npmmirror.com
 
 COPY . .
 ENV NODE_OPTIONS=--openssl-legacy-provider

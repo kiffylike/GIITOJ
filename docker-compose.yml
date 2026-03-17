@@ -1,14 +1,15 @@
-version: "3"
+version: "3.8"
 services:
 
   oj-redis:
-    image: redis:4.0-alpine
+    image: redis:7-alpine
     restart: always
     volumes:
       - ./data/redis:/data
+    command: redis-server --appendonly yes
 
   oj-postgres:
-    image: postgres:10-alpine
+    image: postgres:16-alpine
     restart: always
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
@@ -18,8 +19,7 @@ services:
       - POSTGRES_PASSWORD=onlinejudge
 
   oj-judge:
-    # 使用你自己构建的Judge镜像
-    image: crpi-bf3kcemfp45x9kin.cn-guangzhou.personal.cr.aliyuncs.com/kiffy-oj/judge:latest
+    image: kiffyowo/judge:v2.0
     restart: always
     read_only: true
     cap_drop:
@@ -39,11 +39,9 @@ services:
       - SERVICE_URL=http://oj-judge:8080
       - BACKEND_URL=http://oj-backend:8000/api/judge_server_heartbeat/
       - TOKEN=CHANGE_THIS
-      # - judger_debug=1
 
   oj-backend:
-    # 使用你自己构建的Backend镜像
-    image: crpi-bf3kcemfp45x9kin.cn-guangzhou.personal.cr.aliyuncs.com/kiffy-oj/backend:latest
+    image: kiffyowo/backend:v2.0
     restart: always
     depends_on:
       - oj-redis
@@ -56,8 +54,14 @@ services:
       - POSTGRES_USER=onlinejudge
       - POSTGRES_PASSWORD=onlinejudge
       - JUDGE_SERVER_TOKEN=CHANGE_THIS
-      # - FORCE_HTTPS=1
-      # - STATIC_CDN_HOST=cdn.oj.com
+
+  oj-frontend:
+    image: kiffyowo/frontend:v2.0
+    restart: always
+    depends_on:
+      - oj-backend
+    volumes:
+      - ./data/backend:/app/data:ro
     ports:
-      - "0.0.0.0:80:8000"
-      - "0.0.0.0:443:1443"
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"

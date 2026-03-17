@@ -75,11 +75,6 @@
           <Form-item label="Major">
             <Input v-model="formProfile.major"/>
           </Form-item>
-          <FormItem label="Language">
-            <Select v-model="formProfile.language">
-              <Option v-for="lang in languages" :key="lang.value" :value="lang.value">{{lang.label}}</Option>
-            </Select>
-          </FormItem>
           <Form-item>
             <Button type="primary" @click="updateProfile" :loading="loadingSaveBtn">Save All</Button>
           </Form-item>
@@ -106,7 +101,6 @@
   import utils from '@/utils/utils'
   import {VueCropper} from 'vue-cropper'
   import {types} from '@/store'
-  import {languages} from '@/i18n'
 
   export default {
     components: {
@@ -124,15 +118,13 @@
           size: 0.8,
           outputType: 'png'
         },
-        languages: languages,
         formProfile: {
           real_name: '',
           mood: '',
           major: '',
           blog: '',
           school: '',
-          github: '',
-          language: ''
+          github: ''
         }
       }
     },

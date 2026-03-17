@@ -12,6 +12,7 @@
         </p>
       </div>
     </div>
+    <TimeBoard></TimeBoard>
     <BackTop></BackTop>
   </div>
 </template>
@@ -19,11 +20,13 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import NavBar from '@oj/components/NavBar.vue'
+  import TimeBoard from '@oj/components/TimeBoard.vue'
 
   export default {
     name: 'app',
     components: {
-      NavBar
+      NavBar,
+      TimeBoard
     },
     data () {
       return {

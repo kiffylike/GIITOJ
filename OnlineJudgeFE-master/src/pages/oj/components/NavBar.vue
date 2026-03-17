@@ -43,82 +43,73 @@
         </Menu-item>
       </Submenu>
       
-      <div class="settings-menu">
-        <Dropdown class="theme-dropdown" trigger="click">
-          <Button type="text" size="small">
-            <Icon :type="darkMode ? 'moon' : 'sunny'" size="18"></Icon>
-          </Button>
-          <Dropdown-menu slot="list">
-            <Dropdown-item @click="toggleDarkMode">
-              <Icon :type="darkMode ? 'sunny' : 'moon'" style="margin-right: 8px;"></Icon>
-              {{ darkMode ? '浅色模式' : '深色模式' }}
-            </Dropdown-item>
-            <Dropdown-item divided>
-              <span style="font-weight: 600;">主题选择</span>
-            </Dropdown-item>
-            <Dropdown-item @click="changeTheme('default')" :class="{'theme-active': currentTheme === 'default'}">
-              <span class="theme-dot default-dot"></span> 默认主题
-            </Dropdown-item>
-            <Dropdown-item @click="changeTheme('github')" :class="{'theme-active': currentTheme === 'github'}">
-              <span class="theme-dot github-dot"></span> GitHub
-            </Dropdown-item>
-            <Dropdown-item @click="changeTheme('vscode')" :class="{'theme-active': currentTheme === 'vscode'}">
-              <span class="theme-dot vscode-dot"></span> VS Code
-            </Dropdown-item>
-            <Dropdown-item @click="changeTheme('material')" :class="{'theme-active': currentTheme === 'material'}">
-              <span class="theme-dot material-dot"></span> Material
-            </Dropdown-item>
-            <Dropdown-item @click="changeTheme('cyberpunk')" :class="{'theme-active': currentTheme === 'cyberpunk'}">
-              <span class="theme-dot cyberpunk-dot"></span> 赛博朋克
-            </Dropdown-item>
-            <Dropdown-item @click="changeTheme('anime')" :class="{'theme-active': currentTheme === 'anime'}">
-              <span class="theme-dot anime-dot"></span> 二次元
-            </Dropdown-item>
-          </Dropdown-menu>
-        </Dropdown>
-        
-        <Dropdown class="lang-dropdown" trigger="click">
-          <Button type="text" size="small">
-            <Icon type="earth" size="18"></Icon>
-            <span style="margin-left: 4px;">{{ currentLangLabel }}</span>
-          </Button>
-          <Dropdown-menu slot="list">
-            <Dropdown-item v-for="lang in languages" :key="lang.value" @click="changeLocale(lang.value)">
-              {{ lang.label }}
-            </Dropdown-item>
-          </Dropdown-menu>
-        </Dropdown>
-      </div>
-      
-      <template v-if="!isAuthenticated">
-        <div class="btn-menu">
-          <Button type="ghost"
-                  ref="loginBtn"
-                  shape="circle"
-                  @click="handleBtnClick('login')">{{$t('m.Login')}}
-          </Button>
-          <Button v-if="website.allow_register"
-                  type="ghost"
-                  shape="circle"
-                  @click="handleBtnClick('register')"
-                  style="margin-left: 5px;">{{$t('m.Register')}}
-          </Button>
+      <div class="right-menu">
+        <div class="settings-menu">
+          <Dropdown class="theme-dropdown" trigger="click" @on-click="handleThemeChange">
+            <Button type="text" size="small">
+              <Icon type="ios-color-wand" size="18"></Icon>
+              <span style="margin-left: 4px;">主题切换</span>
+            </Button>
+            <Dropdown-menu slot="list">
+              <Dropdown-item name="default-light" :class="{'theme-active': currentTheme === 'default-light'}">
+                <span class="theme-dot default-dot"></span> 默认浅色
+              </Dropdown-item>
+              <Dropdown-item name="default-dark" :class="{'theme-active': currentTheme === 'default-dark'}">
+                <span class="theme-dot default-dark-dot"></span> 默认深色
+              </Dropdown-item>
+              <Dropdown-item name="cyberpunk-dark" :class="{'theme-active': currentTheme === 'cyberpunk-dark'}">
+                <span class="theme-dot cyberpunk-dot"></span> 赛博朋克
+              </Dropdown-item>
+              <Dropdown-item name="cartoon-fun" :class="{'theme-active': currentTheme === 'cartoon-fun'}">
+                <span class="theme-dot cartoon-dot"></span> 卡通玩趣
+              </Dropdown-item>
+              <Dropdown-item name="ocean-breeze" :class="{'theme-active': currentTheme === 'ocean-breeze'}">
+                <span class="theme-dot ocean-dot"></span> 深海微光
+              </Dropdown-item>
+              <Dropdown-item name="aurora-glow" :class="{'theme-active': currentTheme === 'aurora-glow'}">
+                <span class="theme-dot aurora-dot"></span> 极光曼舞
+              </Dropdown-item>
+            </Dropdown-menu>
+          </Dropdown>
+          
+          <div class="lang-btn" @click="toggleLocale" style="cursor: pointer; display: inline-flex; align-items: center; user-select: none;">
+            <Button type="text" size="small">
+              <Icon type="earth" size="18"></Icon>
+              <span style="margin-left: 4px;">{{ currentLangLabel }}</span>
+            </Button>
+          </div>
         </div>
-      </template>
-      <template v-else>
-        <Dropdown class="drop-menu" @on-click="handleRoute" placement="bottom" trigger="click">
-          <Button type="text" class="drop-menu-title">{{ user.username }}
-            <Icon type="arrow-down-b"></Icon>
-          </Button>
-          <Dropdown-menu slot="list">
-            <Dropdown-item name="/user-home">{{$t('m.MyHome')}}</Dropdown-item>
-            <Dropdown-item name="/status?myself=1">{{$t('m.MySubmissions')}}</Dropdown-item>
-            <Dropdown-item name="/setting/profile">{{$t('m.Settings')}}</Dropdown-item>
-            <Dropdown-item v-if="isAdminRole" name="/admin">{{$t('m.Management')}}</Dropdown-item>
-            <Dropdown-item divided name="/logout">{{$t('m.Logout')}}</Dropdown-item>
-          </Dropdown-menu>
-        </Dropdown>
-      </template>
+        
+        <template v-if="!isAuthenticated">
+          <div class="btn-menu">
+            <Button type="ghost"
+                    ref="loginBtn"
+                    shape="circle"
+                    @click="handleBtnClick('login')">{{$t('m.Login')}}
+            </Button>
+            <Button v-if="website.allow_register"
+                    type="ghost"
+                    shape="circle"
+                    @click="handleBtnClick('register')"
+                    style="margin-left: 10px;">{{$t('m.Register')}}
+            </Button>
+          </div>
+        </template>
+        <template v-else>
+          <Dropdown class="drop-menu" @on-click="handleRoute" placement="bottom" trigger="click">
+            <Button type="text" class="drop-menu-title">{{ user.username }}
+              <Icon type="arrow-down-b"></Icon>
+            </Button>
+            <Dropdown-menu slot="list">
+              <Dropdown-item name="/user-home">{{$t('m.MyHome')}}</Dropdown-item>
+              <Dropdown-item name="/status?myself=1">{{$t('m.MySubmissions')}}</Dropdown-item>
+              <Dropdown-item name="/setting/profile">{{$t('m.Settings')}}</Dropdown-item>
+              <Dropdown-item v-if="isAdminRole" name="/admin">{{$t('m.Management')}}</Dropdown-item>
+              <Dropdown-item divided name="/logout">{{$t('m.Logout')}}</Dropdown-item>
+            </Dropdown-menu>
+          </Dropdown>
+        </template>
+      </div>
     </Menu>
     <Modal v-model="modalVisible" :width="400">
       <div slot="header" class="modal-title">{{$t('m.Welcome_to')}} {{website.website_name_shortcut}}</div>
@@ -147,12 +138,12 @@
       return {
         languages: languages,
         themes: [
-          { value: 'default', label: '默认主题' },
-          { value: 'github', label: 'GitHub' },
-          { value: 'vscode', label: 'VS Code' },
-          { value: 'material', label: 'Material' },
-          { value: 'cyberpunk', label: '赛博朋克' },
-          { value: 'anime', label: '二次元' }
+          { value: 'default-light', label: '默认浅色' },
+          { value: 'default-dark', label: '默认深色' },
+          { value: 'cyberpunk-dark', label: '赛博朋克' },
+          { value: 'cartoon-fun', label: '卡通玩趣' },
+          { value: 'ocean-breeze', label: '深海微光' },
+          { value: 'aurora-glow', label: '极光曼舞' }
         ]
       }
     },
@@ -171,19 +162,17 @@
           mode: mode
         })
       },
-      changeLocale (locale) {
-        this.$store.commit(types.CHANGE_LOCALE, locale)
-        this.$i18n.locale = locale
+      toggleLocale () {
+        const newLocale = this.locale === 'zh-CN' ? 'en-US' : 'zh-CN'
+        this.$store.commit(types.CHANGE_LOCALE, newLocale)
+        this.$i18n.locale = newLocale
       },
-      toggleDarkMode () {
-        this.$store.commit(types.CHANGE_DARK_MODE, !this.darkMode)
-      },
-      changeTheme (theme) {
-        this.$store.commit(types.CHANGE_THEME, theme)
+      handleThemeChange (name) {
+        this.$store.commit(types.CHANGE_THEME, name)
       }
     },
     computed: {
-      ...mapGetters(['website', 'modalStatus', 'user', 'isAuthenticated', 'isAdminRole', 'locale', 'darkMode', 'currentTheme']),
+      ...mapGetters(['website', 'modalStatus', 'user', 'isAuthenticated', 'isAdminRole', 'locale', 'currentTheme']),
       activeMenu () {
         return '/' + this.$route.path.split('/')[1]
       },
@@ -212,12 +201,12 @@
     height: auto;
     width: 100%;
     z-index: 1000;
-    background-color: #fff;
-    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+    background-color: var(--header-bg, rgba(255, 255, 255, 0.85));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: var(--shadow-color, 0 4px 30px rgba(0, 0, 0, 0.05));
     .oj-menu {
-      background: #fdfdfd;
-      display: flex;
-      align-items: center;
+      background: transparent;
     }
 
     .logo {
@@ -228,12 +217,21 @@
       line-height: 60px;
     }
 
+    .right-menu {
+      float: right;
+      display: flex;
+      align-items: center;
+      height: 60px;
+      margin-right: 30px;
+      & > * {
+        margin-left: 20px;
+      }
+    }
+
     .settings-menu {
       display: flex;
       align-items: center;
-      margin-left: auto;
-      margin-right: 100px;
-      gap: 8px;
+      gap: 12px;
     }
 
     .theme-dropdown,
@@ -254,27 +252,28 @@
     }
 
     .default-dot {
-      background: linear-gradient(135deg, #2d8cf0, #5cadff);
+      background: linear-gradient(135deg, #e5e5ea, #f2f2f7);
+      border: 1px solid #d1d1d6;
     }
 
-    .github-dot {
-      background: linear-gradient(135deg, #24292e, #0366d6);
-    }
-
-    .vscode-dot {
-      background: linear-gradient(135deg, #007acc, #1e1e1e);
-    }
-
-    .material-dot {
-      background: linear-gradient(135deg, #6200ee, #03dac6);
+    .default-dark-dot {
+      background: linear-gradient(135deg, #0f172a, #3b82f6);
     }
 
     .cyberpunk-dot {
       background: linear-gradient(135deg, #ff00ff, #00ffff);
     }
 
-    .anime-dot {
-      background: linear-gradient(135deg, #ff6b9d, #c44569);
+    .cartoon-dot {
+      background: linear-gradient(135deg, #ff7675, #ffeaa7);
+    }
+
+    .ocean-dot {
+      background: linear-gradient(135deg, #00d2d3, #012133);
+    }
+
+    .aurora-dot {
+      background: linear-gradient(135deg, #a29bfe, #00cec9);
     }
 
     .theme-active {
@@ -283,18 +282,14 @@
     }
 
     .drop-menu {
-      float: right;
-      margin-right: 30px;
-      position: absolute;
-      right: 10px;
       &-title {
-        font-size: 18px;
+        font-size: 16px;
       }
     }
     .btn-menu {
       font-size: 16px;
-      float: right;
-      margin-right: 10px;
+      display: flex;
+      gap: 8px;
     }
   }
 

@@ -53,4 +53,6 @@ Vue.prototype.$success = (msg) => {
   }
 }
 
+store.dispatch('initThemeAndLocale')
+i18n.locale = store.getters.locale
 new Vue(Vue.util.extend({router, store, i18n}, App)).$mount('#app')

@@ -29,9 +29,6 @@ const getters = {
 const mutations = {
   [types.CHANGE_PROFILE] (state, {profile}) {
     state.profile = profile
-    if (profile.language) {
-      i18n.locale = profile.language
-    }
     storage.set(STORAGE_KEY.AUTHED, !!profile.user)
   }
 }

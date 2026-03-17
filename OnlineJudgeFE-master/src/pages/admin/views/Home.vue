@@ -6,6 +6,9 @@
     <div id="header">
       <i class="el-icon-fa-font katex-editor" @click="katexVisible=true" ></i>
       <screen-full :width="14" :height="14" class="screen-full"></screen-full>
+      <span class="lang-toggle" @click="toggleLocale" style="margin-right: 20px; cursor: pointer; display: inline-flex; align-items: center; user-select: none;">
+        <i class="el-icon-fa-globe" style="margin-right: 4px;"></i> {{ currentLangLabel }}
+      </span>
       <el-dropdown @command="handleCommand">
         <span>{{user.username}}<i class="el-icon-caret-bottom el-icon--right"></i></span>
         <el-dropdown-menu slot="dropdown">
@@ -61,7 +64,17 @@
         }
       })
     },
+    computed: {
+      ...mapGetters(['user', 'locale']),
+      currentLangLabel () {
+        return this.locale === 'zh-CN' ? '简体中文' : 'English'
+      }
+    },
     methods: {
+      toggleLocale () {
+        const newLocale = this.locale === 'zh-CN' ? 'en-US' : 'zh-CN'
+        this.$store.commit(types.CHANGE_LOCALE, newLocale)
+      },
       handleCommand (command) {
         if (command === 'logout') {
           api.logout().then(() => {
@@ -69,9 +82,6 @@
           })
         }
       }
-    },
-    computed: {
-      ...mapGetters(['user'])
     }
   }
 </script>
