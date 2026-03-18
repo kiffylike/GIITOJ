@@ -4,7 +4,7 @@ pipeline {
     environment {
         // 定义环境变量
         DOCKER_CREDENTIAL_ID = 'docker-hub-credentials' // Jenkins 中的凭据 ID
-        COMPOSE_FILE = 'docker-compose.build.yml'
+        BUILD_COMPOSE_FILE = 'docker-compose.build.yml'
     }
 
     stages {
@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo "开始构建 Docker 镜像..."
                 // 注入代理，让 Docker 在打包时走你的 Clash，完美解决 npm 网络被断的问题
-                sh 'docker compose -f ${COMPOSE_FILE} build --build-arg HTTP_PROXY=http://host.docker.internal:7897 --build-arg HTTPS_PROXY=http://host.docker.internal:7897'
+                sh 'docker compose -f ${BUILD_COMPOSE_FILE} build --build-arg HTTP_PROXY=http://host.docker.internal:7897 --build-arg HTTPS_PROXY=http://host.docker.internal:7897'
             }
         }
 
@@ -30,7 +30,7 @@ pipeline {
                 // 使用 Jenkins 的凭据和 Docker 登录
                 withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIAL_ID}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                     sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin'
-                    sh 'docker compose -f ${COMPOSE_FILE} push'
+                    sh 'docker compose -f ${BUILD_COMPOSE_FILE} push'
                 }
             }
         }
@@ -38,9 +38,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "开始部署服务..."
-                // 更新服务：拉取最新镜像并重启
-                sh 'docker-compose pull'
-                sh 'docker-compose up -d'
+                // 更新服务：指定从默认的 docker-compose.yml 拉取最新镜像并重启（包含 Redis 和 PostgreSQL）
+                sh 'docker compose -f docker-compose.yml pull'
+                sh 'docker compose -f docker-compose.yml up -d'
             }
         }
     }
