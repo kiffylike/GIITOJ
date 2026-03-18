@@ -22,4 +22,4 @@ GIITOJ 是基于开源项目 QDUOJ 深度定制的在线评测系统。本项目
 git clone https://github.com/kiffylike/GIITOJ-Deploy.git && cd GIITOJ-Deploy
 
 # 启动服务
-docker compose -f docker-compose.xoj-pro.yml up -d
+docker compose -f docker-compose.yml up -d
