@@ -55,6 +55,14 @@ pipeline {
                         set -e
                         ssh -i "$SSH_KEY" -p ${REMOTE_SSH_PORT} -o StrictHostKeyChecking=no "$SSH_USER@${REMOTE_HOST}" "\
                           set -e; \
+                          if ! command -v git >/dev/null 2>&1; then \
+                            if command -v apt-get >/dev/null 2>&1; then apt-get update && apt-get install -y git; \
+                            elif command -v dnf >/dev/null 2>&1; then dnf install -y git; \
+                            elif command -v yum >/dev/null 2>&1; then yum install -y git; \
+                            elif command -v apk >/dev/null 2>&1; then apk add --no-cache git; \
+                            else echo 'git not found and no supported package manager'; exit 127; fi; \
+                          fi; \
+                          if ! docker compose version >/dev/null 2>&1; then echo 'docker compose not available on remote host'; exit 127; fi; \
                           if [ ! -d '${REMOTE_APP_DIR}/.git' ]; then \
                             git clone --depth 1 -b ${DEPLOY_REPO_BRANCH} ${DEPLOY_REPO_URL} ${REMOTE_APP_DIR}; \
                           else \
